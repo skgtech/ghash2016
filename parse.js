@@ -7,7 +7,7 @@ if (!process.argv[2] || !process.argv[3]) {
 
 var content = fs.readFileSync(process.argv[2]).toString();
 var data = content.split('\n');
-data.splice(0, 1);
+var meta = data.splice(0, 1)[0];
 
 var table = create_table(data);
 
@@ -102,11 +102,14 @@ function find_vertical(row, col, char, table) {
   return max;
 }
 
-function export_commands(file, content) {
-  var out = content.length + "\n";
-  out += content.join("\n");
+function export_commands(file, commands) {
+  var out = commands.length + "\n";
+  out += commands.join("\n");
   out += "\n";
 
   fs.writeFileSync(file, out, "utf-8");
   console.log("Output wrote to file: " + file);
+  console.log("Max Score: " + meta.split(" ")[0] * meta.split(" ")[1]);
+  console.log("Current: " + (meta.split(" ")[0] * meta.split(" ")[1] - commands.length));
+  console.log("Commands: " + commands.length);
 }
