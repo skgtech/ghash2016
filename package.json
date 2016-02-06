@@ -1,0 +1,25 @@
+{
+  "name": "ghash2016",
+  "version": "1.0.0",
+  "description": "",
+  "main": "parse.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vkarampinis/ghash2016.git"
+  },
+  "author": [
+    {
+      "name": "Vaios Karampinis",
+      "email": "oden@oden.gr",
+      "url": "https://github.com/vkarampinis"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vkarampinis/ghash2016/issues"
+  },
+  "homepage": "https://github.com/vkarampinis/ghash2016#readme"
+}
