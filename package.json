@@ -21,5 +21,9 @@
   "bugs": {
     "url": "https://github.com/vkarampinis/ghash2016/issues"
   },
-  "homepage": "https://github.com/vkarampinis/ghash2016#readme"
+  "homepage": "https://github.com/vkarampinis/ghash2016#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  }
 }
