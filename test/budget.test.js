@@ -10,7 +10,7 @@ var expect = chai.expect;
 
 describe('Warehouse Budget', function() {
 
-  describe.only('Nominal Operation', function () {
+  describe('Nominal Operation', function () {
     it('Should calculate expected budget', function () {
       var budget = new Budget(warehouseFix.warehouses);
 
