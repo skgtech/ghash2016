@@ -10,7 +10,7 @@ var helpers = require('../lib/util/helpers');
 
 describe('Helpers', function() {
 
-  describe.only('distance', function () {
+  describe('distance', function () {
     it('Should calculate linear distance', function () {
       var warehouse = new Warehouse({col: 1, row: 1});
       var order = new Order({col: 2, row: 1});
