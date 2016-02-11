@@ -1,5 +1,11 @@
 'use strict';
 
+var DroneModel = require('./lib/models/drone.model');
+var OrderModel = require('./lib/models/order.model');
+var ProductModel = require('./lib/models/product.model');
+var WarehouseModel = require('./lib/models/warehouse.model');
+var WItemModel = require('./lib/models/wItem.model');
+
 module.exports = {};
 
 module.exports.start = function (data) {
@@ -14,7 +20,12 @@ module.exports.start = function (data) {
 
   var productTypesNo = data.splice(0, 1)[0].split(' ')[0];
 
-  var productWeights = data.splice(0, 1)[0].split(' ');
+  var products = data.splice(0, 1)[0].split(' ').map(function (weight, i) {
+    return new ProductModel({
+      id: i,
+      weight: weight
+    });
+  });
 
   var warehouseNo = data.splice(0, 1)[0].split(' ')[0];
   console.log('Rows', rows);
@@ -27,20 +38,29 @@ module.exports.start = function (data) {
   console.log('Warehouse No', warehouseNo);
 
   var warehouses = [];
-  var productTypes = [];
-  var drones = [];
   var orders = [];
 
   for (var whCounter = 0;
        whCounter < (warehouseNo * 2) - 1;
        whCounter = whCounter + 2) {
 
-    var firstWLine = data.splice(0, 1)[0].split(' ');
-    var secondWLine = data.splice(0, 1)[0].split(' ');
-    warehouses.push({
-      location: [firstWLine[0], firstWLine[1]],
-      stock: secondWLine
-    });
+    var wLocation = data.splice(0, 1)[0].split(' ');
+    var wProducts = data.splice(0, 1)[0].split(' ');
+
+    warehouses.push(
+      new WarehouseModel({
+        id: whCounter / 2,
+        row: wLocation[0],
+        col: wLocation[1],
+        inventory: wProducts.map(function (quantity, i) {
+
+          return new WItemModel({
+            productTypeId: i,
+            quantity: quantity
+          });
+        })
+      })
+    );
   }
 
   var ordersNo = data.splice(0, 1)[0].split(' ')[0];
@@ -49,14 +69,20 @@ module.exports.start = function (data) {
        ordersCounter < (ordersNo * 3) - 1;
        ordersCounter = ordersCounter + 3) {
 
-    var firstOLine = data.splice(0, 1)[0].split(' ');
-    var secondOLine = data.splice(0, 1)[0].split(' ');
-    var thirdOLine = data.splice(0, 1)[0].split(' ');
-    orders.push({
-      location: [firstOLine[0], firstOLine[1]],
-      productItems: secondOLine[0],
-      productTypes: thirdOLine
-    });
+    var oLocation = data.splice(0, 1)[0].split(' ');
+    var oTotalProducts = data.splice(0, 1)[0].split(' ');
+    var oProducts = data.splice(0, 1)[0].split(' ');
+
+    orders.push(
+      new OrderModel({
+        id: ordersCounter / 2,
+        row: oLocation[0],
+        col: oLocation[1],
+        inventory: oProducts.map(function (productType) {
+          return products[productType];
+        })
+      })
+    );
   }
 
   console.log('Orders No', orders.length);
